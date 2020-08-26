@@ -17,8 +17,9 @@ router.all('*', (req, res, next)=> {
 /* GET home page. */
 router.get('/', (req, res)=> {
 
-
-  res.render('admin/index', { title: 'Admin' });
+   News.find({}, (err, data) =>{
+    res.render('admin/index', { title: 'Admin', data});
+   });
 });
 
 router.get('/news/add', (req, res)=> {
@@ -42,6 +43,12 @@ newsData.save((err)=>{
   res.redirect('/admin')
 });
 
+});
+
+router.get('/news/delete/:id', (req, res)=> {
+ News.findByIdAndDelete(req.params.id, (err)=>{
+   res.redirect('/admin')
+ })
 });
 
 
